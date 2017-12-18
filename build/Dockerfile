@@ -4,6 +4,7 @@ MAINTAINER Roman Kh <rhudor@gmail.com>
 # installing system packages
 RUN apt-get update && \
     apt-get install -y pkg-config software-properties-common build-essential cmake gfortran \
+        libboost-dev libboost-system-dev libboost-filesystem-dev \
         liblapack-dev libatlas-base-dev libopenblas-dev \
         zlib1g-dev liblzma-dev liblz4-dev libzstd-dev libsnappy-dev zip p7zip-full \
         libhdf5-dev libedit-dev \
@@ -16,7 +17,6 @@ RUN pip3 install --upgrade pip && \
     pip3 install setuptools --upgrade && \
     pip3 install cython && \
     pip3 install toolz && \
-    pip3 install cloudpickle && \
     pip3 install dill && \
     pip3 install fastcache && \
     pip3 install python-snappy && \
@@ -49,8 +49,6 @@ RUN pip3 install tables && \
     pip3 install pandas && \
     pip3 install feather-format && \
     pip3 install fastparquet && \
-    pip3 install toolz && \
-    pip3 install cloudpickle && \
     pip3 install dask && \
     pip3 install python-dateutil
 
@@ -114,7 +112,8 @@ RUN apt-get install -y graphviz && \
 RUN pip3 install SimpleITK && \
     pip3 install pydicom && \
     pip3 install wfdb && \
-    pip3 install PyWavelets
+    pip3 install PyWavelets && \
+    pip3 install pyedflib
 
 # installing deep learning libraries
 RUN pip3 install tensorflow && \
