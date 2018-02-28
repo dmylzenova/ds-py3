@@ -29,17 +29,20 @@ RUN pip3 install --upgrade pip && \
     pip3 install packaging && \
     pip3 install click && \
     pip3 install itsdangerous && \
+    pip3 install requests && \
+    pip3 install eventlet && \
     pip3 install flask && \
+    pip3 install flask-socketio && \
     pip3 install pytest && \
     pip3 install pytest-flask && \
     pip3 install tox
 
 # installing LLVM
 RUN wget -O - http://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
-    apt-add-repository "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-4.0 main" && \
+    apt-add-repository "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-5.0 main" && \
     apt-get update && \
-    apt-get install -y llvm-4.0 && \
-    ln -s /usr/bin/llvm-config-4.0 /usr/bin/llvm-config && \
+    apt-get install -y llvm-5.0 && \
+    ln -s /usr/bin/llvm-config-5.0 /usr/bin/llvm-config && \
     pip3 install llvmlite && \
     pip3 install numba
 
@@ -142,10 +145,11 @@ RUN pip3 install seaborn && \
     pip3 install vispy && \
     pip3 install tqdm
 
-# instaling jupyter
+# installing jupyter
 WORKDIR /jupyter/config
 WORKDIR /jupyter/secret
 RUN pip3 install jupyter && \
+    pip3 install jupyterlab && \
     pip3 install jupyter_contrib_nbextensions && \
     jupyter contrib nbextension install --system && \
     pip3 install ipyvolume && \
