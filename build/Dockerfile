@@ -10,6 +10,12 @@ RUN echo "deb http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604
             libcudnn7=7.0.5.15-1+cuda9.0 \
             libcudnn7-dev=7.0.5.15-1+cuda9.0
 
+# adding repositories for nodejs and yarn
+RUN apt-get install -y curl
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
 # installing system packages
 RUN apt-get update && \
     apt-get install -y pkg-config software-properties-common build-essential cmake gfortran \
@@ -19,11 +25,11 @@ RUN apt-get update && \
         libhdf5-dev libedit-dev \
         libzmq-dev \
         git wget tmux nano sysstat htop mc \
-        python3-pip python3-dev pylint3
+        python3-pip python3-dev pylint3 \
+        man vim screen realpath
 
-# installing python packages
-RUN pip3 install --upgrade pip && \
-    pip3 install setuptools --upgrade && \
+# installing python packages (smth went wrong with pip...)
+RUN pip3 install setuptools --upgrade && \
     pip3 install autopep8 && \
     pip3 install cython && \
     pip3 install toolz && \
@@ -140,10 +146,10 @@ RUN pip3 install SimpleITK && \
 # increase counter to rebuild the image if some library changes
 ENV UPDATE_DL 1
 # installing deep learning libraries
-RUN pip3 install tensorflow-gpu==1.6 && \
+RUN pip3 install tensorflow-gpu==1.7 && \
     pip3 install --no-deps keras && \
     pip3 install --no-deps edward && \
-    pip3 install http://download.pytorch.org/whl/cu90/torch-0.3.1-cp35-cp35m-linux_x86_64.whl  && \
+    pip3 install http://download.pytorch.org/whl/cu90/torch-0.4.0-cp35-cp35m-linux_x86_64.whl && \
     pip3 install torchvision
 
 # installing visualization libraries
@@ -162,6 +168,7 @@ RUN pip3 install jupyter && \
     pip3 install jupyterlab && \
     pip3 install jupyter_contrib_nbextensions && \
     jupyter contrib nbextension install --system && \
+    jupyter labextension install @jupyter-widgets/jupyterlab-manager && \
     pip3 install ipyvolume && \
     pip3 install jupyterhub
 
@@ -173,6 +180,10 @@ RUN pip3 uninstall -y pillow && \
 RUN wget https://get.docker.com -q -O /tmp/getdocker && \
     chmod +x /tmp/getdocker && \
     sh /tmp/getdocker
+
+#dummy thing for flask
+RUN apt-get -yo Dpkg::Options::="--force-confmiss" install --reinstall netbase
+
 
 # increase counter to rebuild the image if start files change
 ENV UPDATE_CMD 1
