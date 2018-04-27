@@ -5,7 +5,7 @@ set -e
 notebooks_vol=${DS_NOTEBOOKS_DIR:-`pwd`/notebooks}
 config_vol=${DS_CONFIG_DIR:-`pwd`/config}
 secret_vol=${DS_SECRET_DIR:-`pwd`/secret}
-port=${DS_PORT:-8888}
+port=${DS_PORT:-8889}
 image=${DS_IMAGE:-analysiscenter1/ds-py3:gpu-1.6}
 
 
