@@ -56,7 +56,8 @@ RUN pip3 install setuptools --upgrade && \
     pip3 install pytest && \
     pip3 install pytest-aiohttp && \
     pip3 install pytest-flask && \
-    pip3 install tox
+    pip3 install tox && \
+    pip3 install visdom
 
 # installing LLVM
 RUN wget -O - http://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
